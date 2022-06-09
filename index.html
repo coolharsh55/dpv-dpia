@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>DPIA Extension for Data Privacy Vocabulary (DPV-DPIA)</title>
+ <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" defer></script>
+ <script class="remove">
+        // All config options at https://respec.org/docs/ 
+    var respecConfig = {
+         shortName: "dpv-dpia",
+         title: "DPIA Extension for Data Privacy Vocabulary (DPV-DPIA)",
+         subtitle: "version 0.1",
+         specStatus: "unofficial",
+         publishDate: "2022-05-25",
+         group: "dpvcg",
+         latestVersion: "https://github.com/coolharsh55/dpv-dpia",
+         github: {
+          repoURL: "https://github.com/coolharsh55/dpv-dpia",
+          },
+      subjectPrefix: "[dpv-dpia]",
+      doJsonLd: true,
+      lint: { "no-unused-dfns": false },
+      canonicalUri: "https://github.com/coolharsh55/dpv-dpia",
+      editors: [
+      {
+          name: "Harshvardhan J. Pandit",
+          url: "https://harshp.com",
+          company: "Trinity College Dublin",
+          companyURL: "https://tcd.ie/"
+      }
+      ],
+      authors: [
+      {
+          name: "Harshvardhan J. Pandit",
+          url: "https://harshp.com",
+          company: "Trinity College Dublin",
+          companyURL: "https://tcd.ie/"
+      },
+      {
+          name: "Georg P. Krog",
+          company: "Signatu AS",
+          companyURL: "https://signatu.com/"
+      }
+      ],
+      localBiblio: {
+          "DPV": {
+            "href": "https://www.w3id.org/dpv",
+            "title": "Data Privacy Vocabulary (DPV) Specification"
+          },
+          "DPV-GDPR": {
+            "href": "https://www.w3id.org/dpv/dpv-gdpr",
+            "title": "GDPR Extension for Data Privacy Vocabulary (DPV-GDPR)"
+          },
+          "DPV-NACE": {
+            "href": "https://www.w3id.org/dpv/dpv-nace",
+            "title": "NACE Taxonomy serialised in RDFS"
+          },
+          "DPV-PD": {
+            "href": "https://www.w3id.org/dpv/dpv-pd",
+            "title": "Personal Data Categories Extension for Data Privacy Vocabulary (DPV-PD)"
+          },
+          "DPV-LEGAL": {
+            "href": "https://www.w3id.org/dpv/dpv-legal",
+            "title": "Legal Extension providing Jurisdictions, Laws, and Authorities for Data Privacy Vocabulary (DPV-LEGAL)"
+          },
+          "DPV-SKOS": {
+            "href": "https://www.w3id.org/dpv/dpv-skos",
+            "title": "Data Privacy Vocabulary serialised using SKOS+RDFS (DPV-SKOS)"
+          },
+          "DPV-OWL": {
+            "href": "https://www.w3id.org/dpv/dpv-owl",
+            "title": "Data Privacy Vocabulary serialised using OWL2 (DPV-OWL)"
+          },
+          "DPV-Primer": {
+            "href": "https://www.w3id.org/dpv/primer",
+            "title": "Primer for Data Privacy Vocabulary"
+          },
+          "DPVCG": {
+            "href": "https://www.w3.org/community/dpvcg/",
+            "title": "W3C Data Privacy Vocabularies and Controls Community Group (DPVCG)"
+          },
+          "GDPR": {
+            "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+            "title": "General Data Protection Regulation (GDPR)"
+          },
+          "SPECIAL": {
+            "href": "https://www.specialprivacy.eu/",
+            "title": "SPECIAL H2020 Project"
+          },
+          "RDF": {
+            "href": "https://www.w3.org/TR/rdf11-concepts/",
+            "title": "RDF 1.1 Concepts and Abstract Syntax"
+          },
+          "RDFS": {
+            "href": "https://www.w3.org/TR/rdf-schema/",
+            "title": "RDF Schema 1.1"
+          },
+          "OWL" :{
+            "href": "https://www.w3.org/TR/owl2-overview/",
+            "title": "OWL 2 Web Ontology Language Document Overview (Second Edition)"
+          },
+          "SKOS": {
+            "href": "https://www.w3.org/TR/skos-reference/",
+            "title": "SKOS Simple Knowledge Organization System"
+          },
+          "DPV-ADOPTION": {
+            "href": "https://www.w3.org/community/dpvcg/wiki/Adoption_of_DPVCG",
+            "title": "Listing of DPV adoption and applications"
+          },
+          "DPV-GUIDES": {
+            "href": "https://w3id.org/dpv/guides",
+            "title": "Guidelines for Adoption and Use of DPV"
+          },
+          "DPV-GUIDE-OWL2": {
+            "href": "https://w3id.org/dpv/guides/dpv-owl",
+            "title": "Using DPV in OWL2"
+          },
+          "NACE": {
+            "href": "https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2",
+            "title": "Statistical Classification of Economic Activities in the European Community (NACE)"
+          },
+          "NAICS": {
+            "href": "https://www.census.gov/eos/www/naics/",
+            "title": "North American Industry Classification System (NAICS)"
+          },
+          "ISIC": {
+            "href": "https://unstats.un.org/unsd/classifications",
+            "title": "International Standard Industrial Classification of All Economic Activities (ISIC)"
+          },
+          "GICS": {
+            "href": "https://www.msci.com/gics",
+            "title": "Global Industry Classification Standard (GICS)"
+          },
+          "NACE-NAICS": {
+            "href": "https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2",
+            "title": "NACE to NAICS mapping"
+          },
+          "EnterPrivacy": {
+            "href": "https://enterprivacy.com/wp-content/uploads/2018/09/Categories-of-Personal-Information.pdf",
+            "title": "Taxonomy of Personal Data Categories"
+          },
+          "TIME": {
+            "href": "https://www.w3.org/TR/owl-time/",
+            "title": "Time Ontology in OWL"
+          },
+          "ISO-27017": {
+            "href": "https://www.iso.org/standard/43757.html",
+            "title": "ISO/IEC 27017:2015 Information technology — Security techniques — Code of practice for information security controls based on ISO/IEC 27002 for cloud services"
+          },
+          "DCAT": {
+            "href": "https://www.w3.org/TR/vocab-dcat-2/",
+            "title": "Data Catalog Vocabulary (DCAT) - Version 2"
+          },
+          "DCAT-AP": {
+            "href": "https://op.europa.eu/en/web/eu-vocabularies/dcat-ap",
+            "title": "DCAT Application profile for data portals in Europe (DCAT-AP)"
+          },
+          "EDPS-ROPA": {
+            "href": "https://edps.europa.eu/about/data-protection-within-edps/records-register_en",
+            "title": "Records Register - European Data Protection Supervisor"
+          }
+        }
+  };
+ </script>
+ <style type="text/css">
+    table {
+       text-align: justify;
+       border-collapse: collapse;
+       border: 1px solid black;
+       margin: auto;
+       display: block;
+       /*overflow: auto;*/
+       table-layout: auto;
+       margin-top: 2px;
+       margin-bottom: 2px;
+       width: 100%;
+    }
+    th {
+       font-weight: bold;
+    }
+    td,th {
+       border: 1px solid black;
+    }
+    .set-x {
+        color: red;
+        background-color: rgba(255, 0, 0, 0.1);
+    }
+    .set-y {
+        color: green;
+        background-color: rgba(0, 255, 0, 0.2);
+    }
+    table.definition {
+        border: none;
+    }
+    .definition td,th {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+ </style>
+</head>
+<body>
+   <section id="abstract">
+     <p>The GDPR requires assessing and conducting a Data Protection Impact Assessment (DPIA) for processing of personal data that may result in high risk and impact to the data subjects. Documenting this process requires information about processing activities, entities and their roles, risks, mitigations and resulting impacts, and consultations. Given the complexities, impact assessments are difficult for stakeholders to identify relevant risks and mitigations, especially for emerging technologies and specific considerations in their use-cases, and to document outcomes in a consistent and reusable manner.</p>
+     <p>This work utilises linked-data to represent DPIA related information so that it can be better managed and shared in an interoperable manner. It is based on analysis of guidance documents produced by EU Data Protection Authorities (DPA) regarding DPIA and by ENISA regarding risk management. </p>
+    <p>It provides two extensions to the Data Privacy Vocabulary (DPV) - first for documenting DPIAs, and second for risk management based on ISO 31000 family of standards. It also considers how <i>shared impact assessments</i> can be realised to reuse this DPIA work in other impact assessments, as well as for future regulations such as for AI and Cybersecurity.</p>
+</section>
+<section id="sotd">
+   <p>This specification is a proposal to the <a href="https://www.w3.org/community/dpvcg/">W3C Data Privacy Vocabularies and Controls CG (DPVCG)</a>.</p>
+   <blockquote>
+      <p>For a complete discussion on the research aspects of this work, relation to state of the art, and discussion of its practicality and merit, please see the draft research article: Pandit, Harshvardhan J. (2022). A Semantic Specification for Data Protection Impact Assessments (DPIA). <a href="https://harshp.com/dpv-dpia/paper/paper">https://harshp.com/dpv-dpia/paper/paper</a></p>
+  </blockquote>
+  <section id="conformance"></section>
+</section>
+<section id="intro">
+  <h2>Introduction</h2>
+</section>
+
+<section class="appendix">
+ <h2>Acknowledgements</h2>
+ <p>Funding: This research has received funding from Uniphar PLC, and the ADAPT Centre for Digital Content Technology which is funded under the SFI Research Centres Programme (Grant 13/RC/2106_P2) and co-funded by the European Regional Development Fund. Harshvardhan J. Pandit has received funding under the Irish Research Council’s Government of Ireland Postdoctoral Fellowship Grant#GOIPD/2020/790.</p>
+</section>
+</body>
+</html>
