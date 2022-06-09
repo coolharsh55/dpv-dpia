@@ -1,0 +1,34 @@
+digraph G {
+    center=true;
+  rankdir=TB; newrank=true;
+  node [style=filled,shape=rect,fillcolor=yellow];
+  S1 [label="Step1:\nDPIA Necessity"];
+  S2 [label="Step2:\nRisk/Impact Assessment"];
+  S3 [label="Step3:\nDecision about Processing"];
+  data [label="information about processing",shape=ellipse,fillcolor=aquamarine];
+  risk [label="risks",shape=ellipse,fillcolor=aquamarine];
+  rights [label="rights",shape=ellipse,fillcolor=aquamarine];
+  impacts [label="impacts",shape=ellipse,fillcolor=aquamarine];
+  DPIA [label="Is DPIA needed?",shape=parallelogram,fillcolor=salmon];
+  HighRisk [label="Residual High-risk?",shape=ellipse,fillcolor=salmon];
+  
+  subgraph cluster_0 {
+      rank=same; rankdir=TB;
+      data->S1->DPIA;
+  }
+  subgraph cluster_1 {
+      rankdir=LR;
+      risk,rights,impacts->S2;
+      data->S2;
+      S2->HighRisk;
+  }
+  subgraph cluster_3 {
+      rank=same; rankdir=TB;
+      processing->S3[dir=back];
+      processing [label="Carry out Processing?",shape=parallelogram,fillcolor=salmon]
+  }
+//   purpose,processing,personaldata,entities,measures,legalbasis->data;
+  
+  DPIA->S2;
+  HighRisk->S3;
+}

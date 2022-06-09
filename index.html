@@ -213,7 +213,266 @@
 </section>
 <section id="intro">
   <h2>Introduction</h2>
+  <p>The [[[DPV]]] currently (as of v0.7) provides the concept <code>dpv:DPIA</code> for the representation of Data Protection Impact Assessments (DPIA) as an organisational measure. It does not elaborate on how this concept should be used in terms of how the specifics of a DPIA such as what processing operations it relates to or who performs it or the outcomes should be indicated. This extension addresses this gap by identifying the additional concepts required and providing documentation for how they can be applied alongside DPV to express the DPIAs.</p>
+  <p>The document is structured in the following manner:</p>
+  <ol>
+    <li><a href="#dpia-requirements">DPIA Requirements</a> provides a brief summary of information requirements for DPIA based on GDPR and various Data Protection Authorities (DPAs) guidance and templates.</li>
+    <li><a href="#dpia-overview">DPIA overview</a> presents a high-level description of the DPIA process, its information contents, and outputs - based on the analysed requirements.</li>
+    <li><a href="#dpv-processing-graph">Describing processing with DPV</a> provides guidance on how the underlying information necessary for conducting a DPIA is expressed using DPV.</li>
+    <li><a href="#dpia-necessity">DPIA necessity</a> describes the conditions under which a DPIA is necessary, and how this information should be expressed.</li>
+    <li><a href="#dpia-risk-assessment">DPIA Risk Assessment</a> describes the risk and impact assessments to be conducted as part of the DPIA.</li>
+    <li><a href="#dpia-outcome">DPIA outcome</a> describes the outcomes of the DPIA process, its information contents, and outputs to be documented.</li>
+    <li><a href="#dpia-documentation">DPIA documentation</a> describes the various actors, entities, and information that is typically associated with DPIAs and must be documented.</li>
+    <li><a href="#examples">Examples</a> provides an overview of applying this extension to DPIA documents found "in the wild".</li>
+    <li><a href="#appendix-dpia-concepts">DPIA concepts</a> appendix provides a summarised table of concepts within the DPIA extension.</li>
+    <li><a href="#appendix-dpv-proposal">Proposed Concepts for DPV</a> appendix provides a list of concepts proposed for inclusion within DPV.</li>
+    <li><a href="#appendix-sources">Sources</a> appendix provides a link to the GDPR, DPA guidelines and templates, and any other sources relevant to this work.</li>
+  </ol>
 </section>
+
+<section id="dpia-requirements">
+  <h2>DPIA requirements</h2>
+  <figure>
+      <img src="img/dpia-3steps.png">
+      <figcaption>A simplified overview of DPIA being a 3-step process</figcaption>
+    </figure>
+  <section id="dpia-requirements-necessity">
+    <h3>Step 1: DPIA Necessity Determination</h3>
+    <p>DPIA is described in [[GDPR]] Article.35 in terms of three steps or processes. The first, (A.35-1) analyses the processing activities to determine whether a DPIA is required to be performed. The outcome of this step is the determination of whether a DPIA is needed or not needed, and the justification for this decision. Note that the decision criteria for this step solely focuses on whether the processing "is likely to result in a high risk to the rights and freedoms of natural persons", and not on the residual likelihood.</p>
+    <div class="note">
+      <p><strong>GDPR A.35-1</strong> Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.</p>
+    </div>
+    <p>GDPR itself specifies certain criterias in terms of processing activities and their context which must always be considered as likely to result in high-risk, and therefore must always require carrying out a DPIA. These include criterias such as profiling, systemic monitoring, and automated processing which are kinds of processing operations, whether the impacts of processing will be "<i>legal effects</i>", processing involves large scale of special categories of data, or the location of processing being a publicly accessible area where systemic monitoring takes place.</p>
+    <div class="note">
+      <p><strong>GDPR A.35-3</strong> A data protection impact assessment referred to in paragraph 1 shall in particular be required in the case of:</p>
+      <ol type="a">
+        <li>a systematic and extensive evaluation of personal aspects relating to natural persons which is based on automated processing, including profiling, and on which decisions are based that produce legal effects concerning the natural person or similarly significantly affect the natural person;</li>
+        <li>processing on a large scale of special categories of data referred to in Article 9(1), or of personal data relating to criminal convictions and offences referred to in Article 10; or</li>
+        <li>a systematic monitoring of a publicly accessible area on a large scale.</li>
+      </ol>
+    </div>
+    <p>Additionally, the GDPR empowers DPAs to establish additional criterias for which a DPIA would be necessary. This means that depending on which DPA is applicable for a given processing operations - such as based on the organisation's location or involvement of specific data subjects - additional criterias for when to conduct DPIAs are necessary. In practice, it would be pragmatic to consider a DPIA being necessary for any criteria mentioned by a DPA regardless of whether they are the relevant authority for processing activities.</p>
+    <div class="note">
+      <p><strong>GDPR A.35-4</strong> The supervisory authority shall establish and make public a list of the kind of processing operations which are subject to the requirement for a data protection impact assessment pursuant to paragraph 1.</p>
+    </div>
+    <p>Of interest is also the ability for DPAs to publish criterias for which DPIAs are not necessary. Similar to the list where processing is necessary, this list is specific to the DPA and may not be shared by other DPAs. Here a criteria appearing on a list does not automatically "exempt" it from DPIA but is to be taken as a general guidance that operations of this type do not typically necessitate the undertaking of a DPIA.</p>
+    <div class="note">
+      <p><strong>GDPR A.35-5</strong> The supervisory authority may also establish and make public a list of the kind of processing operations for which no data protection impact assessment is required.</p>
+    </div>
+  </section>
+  <section id="dpia-requirements-process">
+    <h3>Step 2: Carrying out a DPIA</h3>
+    <p> The second step takes place where a DPIA is needed, and consists of carrying out the DPIA. This involves again analysing the processing activities and determining whether they are "necessary" and "proportional" for what is intended to be done (i.e. purpose), and to assess the risks to the "rights and freedoms" of data subjects in terms of: what risks exist, whether mitigating measures exist and their effectiveness, and the residual risks still in effect.</p>
+    <div class="note">
+      <p><strong>GDPR Art.35-7</strong> The assessment shall contain at least:</p>
+      <ol type="a">
+        <li>a systematic description of the envisaged processing operations and the purposes of the processing, including, where applicable, the legitimate interest pursued by the controller;</li>
+        <li>an assessment of the necessity and proportionality of the processing operations in relation to the purposes;</li>
+        <li>an assessment of the risks to the rights and freedoms of data subjects referred to in paragraph 1; and</li>
+        <li>the measures envisaged to address the risks, including safeguards, security measures and mechanisms to ensure the protection of personal data and to demonstrate compliance with this Regulation taking into account the rights and legitimate interests of data subjects and other persons concerned.</li>
+      </ol>
+    </div>
+  </section>
+  <section id="dpia-requirements-decision">
+    <h3>Step 3: Effect of DPIA Outcome on Processing</h3>
+    <p>Based on the outcome of the previous step where the DPIA was performed and the residual risk determined, the third and final step of the DPIA uses this information to make informed decisions regarding the carrying out of processing activities the DPIA relates to. If the outcome of the DPIA was that there is still a (residual) risk to the rights and freedoms of individuals (i.e. <i>high-risk</i>), then processing should not take place until such high-risks exist.</p>
+    <p>Here the controller has the option to go back to the drawing board and change their processing activities and/or risk mitigation measures until they are satisfied that there are no high-risks applicable. Alternately, the controller can consult the DPA to get an authoritative opinion on the assessment and decision to be taken.</p>
+    <div class="note">
+      <p><strong>GDPR A.36-1</strong> The controller shall consult the supervisory authority prior to processing where a data protection impact assessment under Article 35 indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk.</p>
+    </div>
+  </section>
+  <section id="dpia-requirements-summary">
+    <h3>Summary of DPIA Requirements</h3>
+    <p>From the interpretation of DPIA being a 3-step process, its requirements in terms of required information can be summarised as follows:</p>
+    <ol>
+      <li>General information about processing activities (i.e. purposes, processing, personal data, legal basis, technical and organisational measures, entities involved, etc.)</li>
+      <li>Criterias under which a DPIA is necessary - and whether the processing satisfies any of these so that a DPIA is required</li>
+      <li>Rights and freedoms relevant to the processing and data subjects</li>
+      <li>Risks to rights and freedoms relevant to the processing and data subjects</li>
+      <li>Effectivess of measures in place to mitigate risks - and whether the residual risks still in effect constitutes <i>high-risk</i></li>
+      <li>How the decision of the DPIA influenced the processing activities i.e. they were halted or changes made to risk mitigation measures or a DPA was consulted</li>
+    </ol>
+    <p>In the above, the order follows a logical structure based on what information is required first and its use in following steps. However, the specifics for steps are executed or carried out, such as the determination of whether and how a certain criteria is met regarding DPIA being mandatory, is not within the scope of this work. Here the only concern is the representation of information involved i.e. the inputs to such steps and the resulting outputs.</p>
+  </section>
+</section>
+<section id="dpia-overview">
+  <h2>DPIA overview</h2>
+  <figure id="fig-DPIA">
+    <img src="paper/DPIA.png">
+    <figcaption>Overview of the DPIA Specification</figcaption>
+  </figure>
+</section>
+<section id="dpv-processing-graph">
+  <h2>Describing processing using DPV</h2>
+  <p><em>Scale</em> and <em>Scope</em> are important concepts for consideration of risks and impacts in a DPIA. However, they are also relevant in other processes, such as other impact assessments, management of data and technologies, and so on. Therefore, these concepts should be provided as part of the main DPV vocabulary.</p>
+  <p><code>Scale</code> refers to a measurement along some dimension (of another concept). While there can be absolute values for scale (e.g. 9001 as a number), qualitative labels are more common in DPIAs and other avenues. For this reason, some qualitative concepts would be useful to be provided as part of DPV. The proposal is to have these concepts, in order of larger scale to smaller: <code>Massive</code>, <code>Huge</code>, <code>Large</code>, <code>Medium</code>, <code>Small</code>, <code>Sporadic</code>, <code>Singular</code>.</p>
+  <p>Specific scales relevant in a DPIA include: personal data (<code>DataVolume</code>), data subjects (<code>DataSubjectScale</code>), and processing areas (<code>GeographicScale</code>). The property <code>hasScale</code> is needed to associate these as a context of activities, and therefore as a sub-property of <code>hasContext</code>. Each type of scale is specialised with the qualifiers (list above) to provide a convenient ability to refer to that concept, e.g. <em>large scale of data subjects</em>.</p>
+<pre><code>|          | DataVolume         | DataSubjectScale            | GeographicScale         |
+| -------- | ------------------ | --------------------------- | ----------------------- |
+| Massive  | MassiveDataVolume  | MassiveScaleOfDataSubjects  | MassiveGeographicScale  |
+| Huge     | HugeDataVolume     | HugeScaleOfDataSubjects     | HugeGeographicScale     |
+| Large    | LargeDataVolume    | LargeScaleOfDataSubjects    | LargeGeographicScale    |
+| Medium   | MediumDataVolume   | MediumScaleOfDataSubjects   | MediumGeographicScale   |
+| Small    | SmallDataVolume    | SmallScaleOfDataSubjects    | SmallGeographicScale    |
+| Sporadic | SporadicDataVolume | SporadicScaleOfDataSubjects | SporadicGeographicScale |
+| Singular | SingularDataVolume | SingularScaleOfDataSubjects | SingularGeographicScale |
+</code></pre>
+  <p>A better alternative for <code>GeographicScale</code> would be to express coverage in terms of locations, as: <code>Global</code>, <code>NearlyGlobal</code>, <code>MultiNational</code>, <code>National</code>, <code>Regional</code>, <code>Locality</code>, <code>WithinEnvironment</code>. This is much clearer in terms of what the scale is as compared to labels like <em>large</em> and <em>massive</em> which are context dependant. Either can be provided, or even both can be provided. If both are to be provided, then <code>GeographicCoverage</code> could be a subclass of <code>GeographicScale</code> and the parent concept for these coverage concepts.</p>
+  <p><em>Scope</em>, in differentiating it from <em>Scale</em>, is defined as the <em>variance</em> of something i.e. how much of something is present or how different it is or what is included and what is not. Scale is more about <em>measurement</em> of something. Scope can include things such as specific data categories, or groups of data subjects, or areas - which would not be accurate to specify as being the <em>scale</em> of something. Therefore, the concept <code>Scope</code> and property <code>hasScope</code> are necessary to express this. Further specialisation is not advised as scope can vary (wildly at times) depending on what the use-case is.</p>
+  <p>There are existing concepts within DPV which fall under the category of <em>Scale</em>. These include <code>dpv:Frequency</code>, to be provided with the qualifiers or specialisations as <code>Continous</code>, <code>Often</code>, <code>Sporadic</code>, <code>Singular</code>; and <code>dpv:Duration</code> to be provided with qualifiers <code>Endless</code>, <code>TemporalDuration</code>, <code>UntilEvent</code>, <code>UntilTime</code>, <code>FixedOccurences</code>. Both of these sets describe how these terms are used and providing them would be beneficial for representing information. Note that while frequency terms are consistent with describing <em>scale</em>, those from duration are not homogenous and describe different types of information. This is intentional as duration can be temporal, event-base, or iteration-based. Providing them all under <em>scale</em> despite this would be a good design choice for consistency with other similar concepts.</p>
+
+</section>
+<section id="dpia-necessity">
+  <h2>DPIA necessity conditions</h2>
+  <div class="issue" title="DPIA necessity conditions"><p>TODO</p></div>
+</section>
+<section id="dpia-risk-assessment">
+  <h2>DPIA Risk Assessment</h2>
+  <figure id="fig-risk">
+    <img src="paper/Risk.png">
+    <figcaption>Overview of the Risk Ontology</figcaption>
+  </figure>
+  <p>For expressing risks, mitigations, and impacts, DPV provides high-level concepts as:</p>
+  <ul>
+  <li>to indicate risks <code>dpv:Risk</code>, <code>dpv:hasRisk</code></li>
+  <li>mitigations <code>dpv:RiskMitigationMeasure</code>, <code>dpv:mitigatesRisk</code></li>
+  <li>consequences <code>dpv:Consequence</code>, <code>dpv:hasConsequence</code>, <code>ExclusionOfDataSubjects</code>, <code>DiscriminationOfDataSubjects</code></li>
+  <li>impacts <code>dpv:Impact</code>, <code>dpv:hasImpact</code>, <code>dpv:hasImpactOn</code></li>
+  </ul>
+  <p>For more specific risk assessment information, such as risk levels and severity, there is ongoing work on a ISO 31000 (series) based <a href="https://github.com/coolharsh55/riskonto">risk ontology</a> </p>
+  <p>Specific risk related concepts that are relevant here:</p>
+  <ul>
+  <li>risks: illegitimate access, undesired modification, disappearance of data</li>
+  <li>impacts: Prevents exercise of right, Prevents access to service, Prevents entry into contract, Prevents using a contract</li>
+  </ul>
+
+</section>
+<section id="dpia-outcome">
+  <h2>DPIA outcomes</h2>
+  <p>The three parts of a DPIA (necessity, procedure, outcome) are separate in terms of what their outcomes can be and need to be documented. For this, the concept <code>dpv:DPIA</code> should be a subclass of <code>Audit</code> representing any investigation or assessment or audit. This permits reuse of <code>dpv:hasStatus dpv:AuditStatus</code> to indicate the status of any audit, in this case for DPIAs. </p>
+<pre><code>| Status ↓ DPIA →  | DPIANecessityAssessment | DPIAProcedure   | DPIAOutcome         |
+|------------------|-------------------------|-----------------|---------------------|
+| AuditRequired    | Check DPIA needed       | DPIA needed     | Outcome pending     |
+| AuditAccepted    | Correct analysis        | DPIA accepted   | Outcome accepted    |
+| AuditRefused     | Wrong analysis          | Incorrect DPIA  | Wrong analysis      |
+| AuditApproved    | Approved analysis       | DPIA approved   | Outcome approved    |
+| AuditRequested   | Request Checking        | DPIA requested  | Analysis requested  |
+| AuditNotRequired | DPIA check not needed   | DPIA not needed | Analysis not needed |
+</code></pre>
+  <p>The <code>dpv:AuditStatus</code> only represents the overall status of that process/event/concept - so it will only inform whether someone needs to be done or has been done. In DPIAs, it is also necessary to record the <em>outcome</em> of each part, i.e. what was determined after the necessity assessment would specify whether a DPIA is needed to be conducted, and so on. To represent this information, a new property <code>dpv:hasOutcome</code> is proposed for addition in to DPV.</p>
+  <p>Specific outcomes of each process are:</p>
+  <ul>
+  <li>for <code>dpv:DPIANecessityAssessment</code>: the concept <code>DPIANecessityStatus</code> with specialisations <code>DPIARequired</code> and <code>DPIANotRequired</code></li>
+  <li>for <code>dpv:DPIAProcedure</code>: the concept <code>DPIARiskStatus</code> with specialisations  <code>HighRiskToRights</code>, <code>LowRiskToRights</code>, <code>NoRiskToRights</code></li>
+  <li>for <code>dpv:DPIAOutcome</code>: the concept <code>DPIAOutcomeStatus</code> with specialisations <code>HighResidualRisk</code>, <code>ConsultationRequired</code>, <code>MitigatedRisk</code></li>
+  </ul>
+  <p>In these, all these <em>statuses</em> can also be used as annotations for other concepts, such as specific instances of <code>dpv:PersonalDataHandling</code>, or <code>dpv:Technology</code> to indicate their relation and relevance in terms of  DPIAs.</p>
+  <p>Similar to <code>Audit</code>, other relevant processes that are involved in a DPIA but can be generalised include: <code>Approval</code>, <code>Investigation</code>, and <code>Review</code>. These concepts can be relevant as organisational measures, for example to specify there is a reviewing procedure or policy in place for processing activities.
+  For representing various consultations, DPV provides the <code>dpv:Consultation</code> concept. For DPIAs, this needs to be extended as: <code>ConsultationWithDataSubject</code> and <code>ConsultationWithDPO</code>.</p>
+
+</section>
+<section id="dpia-documentation">
+  <h2>DPIA documentation</h2>
+  <p>For describing the what/where/how/when type annotations associated with DPIA (and its parts), <a href="https://dublincore.org/specifications/dublin-core/dcmi-terms/">DCMI terms</a> are reused as follows:</p>
+  <ul>
+  <li><code>dct:title</code>: title of the DPIA</li>
+  <li><code>dct:creator</code>: creator of DPIA</li>
+  <li><code>dct:description</code>: description of the DPIA</li>
+  <li><code>dct:identifier</code>: an identifier for the DPIA, could be a unique reference and/or a version</li>
+  <li><code>dct:created</code>: date the DPIA was created or generated</li>
+  <li><code>dct:modified</code>: date DPIA was modified</li>
+  <li><code>dct:dateSubmitted</code>: date the DPIA was submitted (e.g. for audit or approval)</li>
+  <li><code>dct:dateAccepted</code>: date the DPIA was accepted (e.g. after assessment)</li>
+  <li><code>dct:temporal</code>: other temporal information as needed </li>
+  <li><code>dct:valid</code>: denotes duration for how long the DPIA would be valid or in effect, or could be a reference to when to conduct a DPIA again</li>
+  <li><code>dct:conformsTo</code>: whether the DPIA follows some guidelines or conforms to a code of conduct or a template/methodology/standard</li>
+  <li><code>dct:isVersionOf</code>: reference to prior version of this DPIA</li>
+  <li><code>dct:subject</code>: references the &#39;topic&#39; of the DPIA, i.e. what is being assessed, e.g. a product or a specific service. This would typically be a <code>dpv:PersonalDataHandling</code> or its subclass within DPV, but common use could also be as a string description</li>
+  <li><code>dct:coverage</code>: indicating the scope of the DPIA, e.g. temporal or geographical or jurisdictional</li>
+  </ul>
+  <p>In DPIA documents, a large amount of information is expected to be recorded in the form of <em>justifications</em> for why something was or was not done regarding the requirements set out by GDPR or DPAs. This information would typically be indicated as a textual description (i.e. free-form text) accompanying some question or concept. Given the importance of this concept in legal compliance, and the necessity to record this information in a form more explicit than (mere) descriptions, the property <code>hasJustification</code> and concept <code>Justification</code> is proposed for inclusion in DPV. The concept enables associating a textual statement, or document, or specific concept as the justification for its state or existence, and is also useful beyond DPIAs - such as for acknowledging legal compliance obligations or recording a DPO’s statements during an investigation.</p>
+
+</section>
+<section id="examples">
+  <h2>Examples</h2>
+  <div class="issue" title="Example of usage and application"><p>TODO</p></div>
+</section>
+
+<section class="appendix" id="appendix-dpv-proposal">
+  <h2>Appendix: DPV proposal</h2>
+  <p>For <code>dpv:Processing</code> with parent concept in brackets.</p>
+  <ul>
+  <li><code>Access</code>  (<code>dpv:Use</code>)</li>
+  <li><code>Assess</code> (<code>dpv:Use</code>)</li>
+  <li><code>Filter</code> (<code>dpv:Transform</code>)</li>
+  <li><code>Monitor</code> (<code>dpv:Consult</code>)</li>
+  <li><code>Modify</code>  (<code>dpv:Alter</code>)</li>
+  <li><code>Observe</code> (<code>dpv:Obtain</code>)</li>
+  <li><code>Screen</code> (<code>dpv:Transform</code>)</li>
+  </ul>
+  <p>For <code>dpv:DataSubject</code>:</p>
+  <ul>
+  <li><code>MentallyVulernable</code></li>
+  <li><code>AsylumSeeker</code></li>
+  <li><code>ElderlyDataSubject</code></li>
+  </ul>
+  <p>For <code>dpv:TechnicalOrganisationalMeasure</code>:</p>
+  <ul>
+  <li><code>CredentialManagement</code> (<code>dpv:AuthorisationProcedure</code>)</li>
+  <li><code>DataBackupProtocols</code> (<code>dpv:TechnicalMeasure</code>)</li>
+  <li><code>PhysicalAccessControlMethod</code> (<code>dpv:AccessControlMethod</code>)</li>
+  <li></li>
+  </ul>
+  <p>For <code>dpv:Technologoy</code>:</p>
+  <ul>
+  <li><code>ConventionalTechnology</code></li>
+  <li><code>NewTechnologoy</code></li>
+  </ul>
+  <p>For <code>dpv:ProcessingContext</code>:</p>
+  <ul>
+  <li><code>AutomationOfProcessing</code></li>
+  <li><code>FullyAutomatedProcessing</code></li>
+  <li><code>AutomatedProcessingWithHumanVerification</code></li>
+  <li><code>AutomatedProcessingWithHumanOversight</code></li>
+  <li><code>AutomatedProcessingWithHumanInput</code></li>
+  <li><code>PartiallyAutomatedProcessing</code></li>
+  <li><code>CompletelyManualProcessing</code></li>
+  </ul>
+  <p>For <code>dpv:Purpose</code>:</p>
+  <ul>
+  <li><code>MaintainCreditCheckingDatabase</code> (<code>dpv:CreditChecking</code>)</li>
+  <li><code>MaintainCreditRatingDatabase</code> (<code>dpv:CreditChecking</code>)</li>
+  <li><code>MaintainFraudDatabase</code> (<code>dpv:FraudPreventionAndDetection</code>)</li>
+  </ul>
+  <p>For <code>dpv:PersonalData</code> in DPV-PD:</p>
+  <ul>
+  <li><code>PerformanceAtWork</code> (<code>dpv-pd:Behavioral,dpv-pd:Professional</code>)</li>
+  <li><code>FinancialStatus</code> (<code>dpv-pd:Financial</code>)</li>
+  <li><code>Reliability</code> (<code>dpv-pd:Behavioral</code>)</li>
+  <li><code>Profile</code> (<code>dpv:PersonalData</code>)</li>
+  <li><code>WorkEnvironment</code> (<code>dpv-pd:Professional</code>)</li>
+  <li><code>BrowserHistory</code> (<code>dpv-pd:BrowsingBehavior</code>)</li>
+  <li><code>VehicleLicense</code> (<code>dpv-pd:Identifying</code>)</li>
+  <li><code>VehicalLicenseNumber</code> (<code>VehicleLicense</code>)</li>
+  <li><code>VehicalLicenseRegistration</code> (<code>VehicleLicense</code>)</li>
+  <li><code>FacialPrint</code> (<code>dpv-pd:Biometric</code>)</li>
+  <li><code>PersonalDocuments</code> (<code>dpv-pd:External</code>)</li>
+  <li><code>HouseholdData</code> (<code>dpv:PersonalData</code>)</li>
+  <li><code>SocialMediaData</code> (<code>dpv-pd:Communication</code>) with existing categories under this</li>
+  <li><code>PubliclyAvailableSocialMediaData</code> (<code>SocialMediaData</code>)</li>
+  </ul>
+
+</section>
+<section class="appendix" id="appendix-dpia-concepts">
+  <h2>Appendix: DPIA concepts</h2>
+  <div class="issue" title="DPIA concepts appendix"><p>TODO</p></div>
+</section>
+<section class="appendix" id="appendix-sources">
+  <h2>Appendix: Sources of Information</h2>
+  <div class="issue" title="Sources of information"><p>TODO</p></div>
+</section>
+
+<section class="appendix" id="issue-summary"></section>
 
 <section class="appendix">
  <h2>Acknowledgements</h2>
